@@ -86,14 +86,12 @@ After installation, add to your `.env`:
 BOT_TOKEN=1234567890:ABCDEFGHIJKLMNOQRSTZ
 BOT_SECRET=your_secret_key (optional)
 BOT_MANAGERS=123456789,985632147 (optional)
-BOT_WEBHOOK_URL=https://yourdomain.com/bot (optional)
 ```
 
 **Parameter descriptions:**
 - **BOT_TOKEN** — Your Telegram bot token (issued by @BotFather). **Required.**
 - **BOT_SECRET** — Secret token to verify webhook authenticity (`X-Telegram-Bot-Api-Secret-Token` header). Optional but recommended.
 - **BOT_MANAGERS** — Telegram user IDs of bot administrators, comma-separated. Enables the `isAdmin()` method to restrict commands. Optional.
-- **BOT_WEBHOOK_URL** — Public URL where Telegram will send updates. Only needed if using webhook instead of polling. Optional.
 
 
 ## 🌐 Webhook Route
