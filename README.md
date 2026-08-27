@@ -1,4 +1,4 @@
-# # LaraBot 
+# LaraBot 
 
 Seamless integration of [TGram](https://github.com/al3x5dev/tgram) the powerful PHP library for creating Telegram bots with the [Laravel framework](https://github.com/laravel/laravel).
 
