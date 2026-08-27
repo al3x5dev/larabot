@@ -1,6 +1,6 @@
 <?php
 namespace Mk4U\LaraBot\Commands;
-// src/Commands/Traits/ValidatesBotToken.php
+
 trait ValidatesBotToken
 {
     protected function ensureBotToken(): ?int

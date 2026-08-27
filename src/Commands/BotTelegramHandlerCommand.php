@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 class BotTelegramHandlerCommand extends Command
 {
     use MakeClass;
+    use ValidatesName;
 
     protected $signature = 'tgram:handler {name?}';
     protected $description = 'Create a new Telegram handler';
@@ -21,6 +22,11 @@ class BotTelegramHandlerCommand extends Command
                 $this->error('Name cannot be empty.');
                 return 1;
             }
+        }
+
+        if (!$this->validateName($name)) {
+            $this->error('Invalid name. Only letters, numbers, hyphens, underscores and forward slashes are allowed.');
+            return 1;
         }
 
         $data = $this->makeDir($name, 'bot/Handlers', $this->output);

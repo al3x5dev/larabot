@@ -19,7 +19,7 @@ class BotRegisterCommand extends Command
         }
 
         if (!file_exists(base_path('bot/Commands')) && !file_exists(base_path('bot/Callbacks'))) {
-            $this->error('No bot commands or callbacks found. Run php artisan xbot first to set up your bot.');
+            $this->error('No bot commands or callbacks found. Run php artisan tgram first to set up your bot.');
             return 1;
         }
 

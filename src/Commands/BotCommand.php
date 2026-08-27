@@ -25,7 +25,7 @@ class BotCommand extends Command
         'poll',
     ];
 
-    public function handle()
+    public function handle(): int
     {
         $args = $this->argument('args');
 
@@ -67,7 +67,7 @@ class BotCommand extends Command
         return 1;
     }
 
-    protected function runInstallation()
+    protected function runInstallation(): int
     {
         $this->info('Installing TGram for Laravel...');
 
@@ -100,7 +100,7 @@ class BotCommand extends Command
 
     private function runLocalCommand(string $command, array $args = []): int
     {
-        // Convertir hook:info -> xbot:hook:info
+        // Convertir hook:info -> tgram:hook:info
         $artisanCommand = 'tgram:' . $command;
 
         $mapped = [];

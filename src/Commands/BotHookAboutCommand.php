@@ -11,12 +11,14 @@ class BotHookAboutCommand extends Command
 
     use ValidatesBotToken;
 
-    public function handle()
+    public function handle(): int
     {
-        $this->ensureBotToken();
+        if ($this->ensureBotToken() !== null) {
+            return 1;
+        }
 
         try {
-            $bot = app('xbot');
+            $bot = app('tgram');
             $data = $bot->getMe();
 
             foreach ($data->getProperties() as $key => $value) {

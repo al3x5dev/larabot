@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 class BotTelegramConversationsCommand extends Command
 {
     use MakeClass;
+    use ValidatesName;
 
     protected $signature = 'tgram:conversation {name?}';
     protected $description = 'Create a new conversational flow in your bot';
@@ -21,6 +22,11 @@ class BotTelegramConversationsCommand extends Command
                 $this->error('Name cannot be empty.');
                 return 1;
             }
+        }
+
+        if (!$this->validateName($name)) {
+            $this->error('Invalid name. Only letters, numbers, hyphens, underscores and forward slashes are allowed.');
+            return 1;
         }
 
         $data = $this->makeDir($name, 'bot/Conversations', $this->output);

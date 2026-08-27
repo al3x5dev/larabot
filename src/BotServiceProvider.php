@@ -55,6 +55,6 @@ class BotServiceProvider extends ServiceProvider
             return new Bot($config);
         });
 
-        $this->app->alias(Bot::class, 'xbot');
+        $this->app->alias(Bot::class, 'tgram');
     }
 }

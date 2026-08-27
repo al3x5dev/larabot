@@ -11,20 +11,27 @@ class BotHookDeleteCommand extends Command
 
     use ValidatesBotToken;
 
-    public function handle()
+    public function handle(): int
     {
         if (!$this->confirm('Are you sure you want to delete the webhook?')) {
             $this->info('Operation cancelled.');
             return 0;
         }
 
-        try {
-            $this->ensureBotToken();
+        if ($this->ensureBotToken() !== null) {
+            return 1;
+        }
 
-            $bot = app('xbot');
+        try {
+            $bot = app('tgram');
             $data = $bot->deleteWebhook(drop_pending_updates: true);
 
-            $this->info('✅ Webhook was deleted');
+            if (!($data->ok ?? false)) {
+                $this->error('Failed to delete webhook: ' . ($data->description ?? 'Unknown error'));
+                return 1;
+            }
+
+            $this->info('Webhook was deleted');
             return 0;
         } catch (\Exception $e) {
             $this->error('❌ Error: ' . $e->getMessage());

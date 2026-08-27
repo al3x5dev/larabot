@@ -12,6 +12,8 @@ class BotPollCommand extends Command
     protected $signature = 'tgram:poll {interval=3}';
     protected $description = 'Starts the bot using long polling instead of a webhook';
 
+    private bool $running = true;
+
     public function handle(): int
     {
         $interval = $this->argument('interval');
@@ -24,7 +26,7 @@ class BotPollCommand extends Command
 
         $this->handleSignals();
 
-        $bot = app('xbot');
+        $bot = app('tgram');
         $offset = 0;
 
         $this->info(sprintf(
@@ -32,7 +34,7 @@ class BotPollCommand extends Command
             $interval
         ));
 
-        while (true) {
+        while ($this->running) {
             try {
                 $updates = $bot->getUpdates($offset, timeout: $interval);
             } catch (\Throwable $th) {
@@ -89,9 +91,8 @@ class BotPollCommand extends Command
 
         pcntl_async_signals(true);
 
-        $stop = function (): never {
-            $this->info('Polling stopped.');
-            exit(0);
+        $stop = function () {
+            $this->running = false;
         };
 
         pcntl_signal(SIGINT, $stop);

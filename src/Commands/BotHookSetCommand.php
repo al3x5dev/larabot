@@ -11,7 +11,7 @@ class BotHookSetCommand extends Command
 
     use ValidatesBotToken;
 
-    public function handle()
+    public function handle(): int
     {
         $url = $this->argument('url');
 
@@ -19,19 +19,25 @@ class BotHookSetCommand extends Command
             $url = $this->ask('What is the URL for sending updates?');
         }
 
-        // Validar URL
         if (!filter_var($url, FILTER_VALIDATE_URL) || parse_url($url, PHP_URL_SCHEME) !== 'https') {
             $this->error('The URL must be a valid HTTPS URL.');
             return 1;
         }
 
-        $this->ensureBotToken();
+        if ($this->ensureBotToken() !== null) {
+            return 1;
+        }
 
         try {
-            $bot = app('xbot');
+            $bot = app('tgram');
             $data = $bot->setWebhook($url, drop_pending_updates: true, secret_token: config('bot.secret'));
 
-            $this->info('✅ Webhook was set');
+            if (!($data->ok ?? false)) {
+                $this->error('Failed to set webhook: ' . ($data->description ?? 'Unknown error'));
+                return 1;
+            }
+
+            $this->info('Webhook was set');
             return 0;
         } catch (\Exception $e) {
             $this->error('❌ Error: ' . $e->getMessage());

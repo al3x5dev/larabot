@@ -105,7 +105,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/bot', function (Request $request) {
-    app('xbot')->run();
+    app('tgram')->run();
 });
 ```
 
@@ -146,14 +146,14 @@ use Mk4U\TGram\Bot;
 // Method 1: via type-hinting (recommended)
 public function myMethod(Bot $bot) { ... }
 
-// Method 2: via alias 'xbot' (recommended)
-$bot = app('xbot');
+// Method 2: via alias 'tgram' (recommended)
+$bot = app('tgram');
 
 // Method 3: via app() helper
 $bot = app(Bot::class);
 ```
 
-> **Note:** Always use `app('xbot')` or `app(Bot::class)` instead of `new Bot(...)`. The singleton handles Laravel cache integration automatically.
+> **Note:** Always use `app('tgram')` or `app(Bot::class)` instead of `new Bot(...)`. The singleton handles Laravel cache integration automatically.
 
 
 ### Using Facade (if needed)
@@ -232,7 +232,7 @@ public function handleCallback(Bot $bot)
 ## 📚 Requirements
 
 - PHP 8.5+
-- Laravel 12.x+
+- Laravel 13.x+
 - TGram Library (automatically installed)
 
 
