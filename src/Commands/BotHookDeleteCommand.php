@@ -24,10 +24,10 @@ class BotHookDeleteCommand extends Command
 
         try {
             $bot = app('tgram');
-            $data = $bot->deleteWebhook(drop_pending_updates: true);
+            $result = $bot->deleteWebhook(drop_pending_updates: true);
 
-            if (!($data->ok ?? false)) {
-                $this->error('Failed to delete webhook: ' . ($data->description ?? 'Unknown error'));
+            if ($result !== true) {
+                $this->error('Failed to delete webhook.');
                 return 1;
             }
 

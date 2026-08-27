@@ -30,10 +30,10 @@ class BotHookSetCommand extends Command
 
         try {
             $bot = app('tgram');
-            $data = $bot->setWebhook($url, drop_pending_updates: true, secret_token: config('bot.secret'));
+            $result = $bot->setWebhook($url, drop_pending_updates: true, secret_token: config('bot.secret'));
 
-            if (!($data->ok ?? false)) {
-                $this->error('Failed to set webhook: ' . ($data->description ?? 'Unknown error'));
+            if ($result !== true) {
+                $this->error('Failed to set webhook.');
                 return 1;
             }
 
