@@ -81,6 +81,10 @@ class BotPollCommand extends Command
                 sleep(1);
             }
         }
+
+        $this->info('Polling stopped.');
+
+        return 0;
     }
 
     private function handleSignals(): void
